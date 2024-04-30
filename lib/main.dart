@@ -1,4 +1,5 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -56,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
   PermissionStatus? _permissionGallery;
   PermissionStatus? _permissionLocation;
   PermissionStatus? _permissionMicrophone;
-  String? _permissionNotification;
+  PermissionStatus? _permissionNotification;
 
   void _askPermissionTogether() {
     Permission.camera
@@ -67,6 +68,12 @@ class _MyHomePageState extends State<MyHomePage> {
             _permissionCameraStatus = value;
           });
         })
+        .then((_) => Permission.photos.request().then((value) {
+              print("Photos permission status: $value");
+              setState(() {
+                _permissionGallery = value;
+              });
+            }))
         .then((_) => Permission.storage.request().then((value) {
               print("Storage permission status: $value");
               setState(() {
@@ -85,12 +92,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 _permissionMicrophone = value;
               });
             }))
-        .then((_) => FirebaseMessaging.instance
-                .requestPermission()
-                .then((NotificationSettings value) {
+        .then((value) => Permission.notification.request().then((value) {
               print("Notification permission status: $value");
               setState(() {
-                _permissionNotification = value.authorizationStatus.name;
+                _permissionNotification = value;
               });
             }));
   }
@@ -137,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headline4,
             ),
             Text('camera: $_permissionCameraStatus'),
-            // Text('gallery: $_permissionGallery'),
+            if (Platform.isIOS) Text('gallery: $_permissionGallery'),
             Text('storage: $_permissionStorageStatus'),
             Text('location: $_permissionLocation'),
             Text('microphone: $_permissionMicrophone'),

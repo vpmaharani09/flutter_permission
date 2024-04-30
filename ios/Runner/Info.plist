@@ -46,7 +46,7 @@
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Camera permission is required for barcode scanning.</string>
+	<string>Camera permission is required for take picture.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Apps needs location to determine nearest hospital from user current location.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
