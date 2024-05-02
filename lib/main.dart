@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -61,6 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _askPermissionTogether() {
     Permission.camera
+        .onDeniedCallback(() {
+          Fluttertoast.showToast(
+              msg: "Camera permission denied", timeInSecForIosWeb: 5);
+        })
         .request()
         .then((value) {
           print("Camera permission status: $value");
@@ -68,31 +73,64 @@ class _MyHomePageState extends State<MyHomePage> {
             _permissionCameraStatus = value;
           });
         })
-        .then((_) => Permission.photos.request().then((value) {
+        .then((_) => Permission.photos
+            .onDeniedCallback(() {
+              Fluttertoast.showToast(
+                  msg: "Photos permission denied", timeInSecForIosWeb: 5);
+            })
+            .request()
+            .then((value) {
               print("Photos permission status: $value");
               setState(() {
                 _permissionGallery = value;
               });
+            })
+            .catchError((e) {
+              print(e);
             }))
-        .then((_) => Permission.storage.request().then((value) {
+        .then((_) => Permission.storage
+            .onDeniedCallback(() {
+              Fluttertoast.showToast(
+                  msg: "Storage permission denied", timeInSecForIosWeb: 5);
+            })
+            .request()
+            .then((value) {
               print("Storage permission status: $value");
               setState(() {
                 _permissionStorageStatus = value;
               });
             }))
-        .then((_) => Permission.location.request().then((value) {
+        .then((_) => Permission.location
+            .onDeniedCallback(() {
+              Fluttertoast.showToast(
+                  msg: "Location permission denied", timeInSecForIosWeb: 5);
+            })
+            .request()
+            .then((value) {
               print("Location permission status: $value");
               setState(() {
                 _permissionLocation = value;
               });
             }))
-        .then((_) => Permission.microphone.request().then((value) {
+        .then((_) => Permission.microphone
+            .onDeniedCallback(() {
+              Fluttertoast.showToast(
+                  msg: "Microphone permission denied", timeInSecForIosWeb: 5);
+            })
+            .request()
+            .then((value) {
               print("Microphone permission status: $value");
               setState(() {
                 _permissionMicrophone = value;
               });
             }))
-        .then((value) => Permission.notification.request().then((value) {
+        .then((value) => Permission.notification
+            .onDeniedCallback(() {
+              Fluttertoast.showToast(
+                  msg: "Notification permission denied", timeInSecForIosWeb: 5);
+            })
+            .request()
+            .then((value) {
               print("Notification permission status: $value");
               setState(() {
                 _permissionNotification = value;
@@ -134,7 +172,6 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            
             Text('camera: $_permissionCameraStatus'),
             if (Platform.isIOS) Text('gallery: $_permissionGallery'),
             Text('storage: $_permissionStorageStatus'),
