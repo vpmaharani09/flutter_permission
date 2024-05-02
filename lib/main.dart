@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -62,9 +62,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _askPermissionTogether() {
     Permission.camera
-        .onDeniedCallback(() {
-          Fluttertoast.showToast(
-              msg: "Camera permission denied", timeInSecForIosWeb: 5);
+        .onPermanentlyDeniedCallback(() {
+          print("Camera permission is denied");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Camera permission is denied'),
+              action: SnackBarAction(
+                label: "OK",
+                onPressed: (){},
+              ),
+            ),
+          );
         })
         .request()
         .then((value) {
@@ -74,9 +82,17 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         })
         .then((_) => Permission.photos
-            .onDeniedCallback(() {
-              Fluttertoast.showToast(
-                  msg: "Photos permission denied", timeInSecForIosWeb: 5);
+            .onPermanentlyDeniedCallback(() {
+              print('Photos permission is denied');
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Photos permission is denied'),
+                  action: SnackBarAction(
+                    label: "OK",
+                    onPressed: (){},
+                  ),
+                ),
+              );
             })
             .request()
             .then((value) {
@@ -89,9 +105,17 @@ class _MyHomePageState extends State<MyHomePage> {
               print(e);
             }))
         .then((_) => Permission.storage
-            .onDeniedCallback(() {
-              Fluttertoast.showToast(
-                  msg: "Storage permission denied", timeInSecForIosWeb: 5);
+            .onPermanentlyDeniedCallback(() {
+              print("Storage permission is denied");
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Storage permission is denied'),
+                  action: SnackBarAction(
+                    label: "OK",
+                    onPressed: (){},
+                  ),
+                ),
+              );
             })
             .request()
             .then((value) {
@@ -101,9 +125,17 @@ class _MyHomePageState extends State<MyHomePage> {
               });
             }))
         .then((_) => Permission.location
-            .onDeniedCallback(() {
-              Fluttertoast.showToast(
-                  msg: "Location permission denied", timeInSecForIosWeb: 5);
+            .onPermanentlyDeniedCallback(() {
+              print("Location Permission is denied");
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Location Permission is denied'),
+                  action: SnackBarAction(
+                    label: "OK",
+                    onPressed: (){},
+                  ),
+                ),
+              );
             })
             .request()
             .then((value) {
@@ -113,9 +145,17 @@ class _MyHomePageState extends State<MyHomePage> {
               });
             }))
         .then((_) => Permission.microphone
-            .onDeniedCallback(() {
-              Fluttertoast.showToast(
-                  msg: "Microphone permission denied", timeInSecForIosWeb: 5);
+            .onPermanentlyDeniedCallback(() {
+              print("Microphone permission is denied");
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Microphone permission is denied'),
+                  action: SnackBarAction(
+                    label: "OK",
+                    onPressed: (){},
+                  ),
+                ),
+              );
             })
             .request()
             .then((value) {
@@ -125,9 +165,17 @@ class _MyHomePageState extends State<MyHomePage> {
               });
             }))
         .then((value) => Permission.notification
-            .onDeniedCallback(() {
-              Fluttertoast.showToast(
-                  msg: "Notification permission denied", timeInSecForIosWeb: 5);
+            .onPermanentlyDeniedCallback(() {
+              print("Notification permission is denied");
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Notification permission is denied'),
+                  action: SnackBarAction(
+                    label: "OK",
+                    onPressed: (){},
+                  ),
+                ),
+              );
             })
             .request()
             .then((value) {
